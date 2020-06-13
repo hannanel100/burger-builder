@@ -12,12 +12,12 @@ import * as actionType from "../../store/actions";
 
 class BurgerBuilder extends Component {
   state = {
-    purchasable: false,
     purchasing: false,
     loading: false,
     error: false,
   };
   componentDidMount() {
+    console.log(this.props);
     // axios
     //   .get("https://react-my-burger-982dd.firebaseio.com/ingredients.json")
     //   .then((response) => {
@@ -35,7 +35,7 @@ class BurgerBuilder extends Component {
       .reduce((sum, el) => {
         return sum + el;
       }, 0);
-    this.setState({ purchasable: sum > 0 });
+    return sum > 0;
   }
 
   parchaseHandler = () => {
@@ -45,27 +45,14 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
   purchaseContinueHandler = () => {
-    // alert("You continue!");
-
-    const queryParams = [];
-    for (let i in this.props.ings) {
-      queryParams.push(
-        encodeURIComponent(i) + "=" + encodeURIComponent(this.props.ings[i])
-      );
-    }
-    queryParams.push("price=" + this.state.totalPrice);
-    const queryString = queryParams.join("&");
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString,
-    });
+    this.props.history.push("/checkout");
   };
 
   render() {
     const disabledInfo = {
       ...this.props.ings,
     };
-    for (const key in disabledInfo) {
+    for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let orderSummary = null;
@@ -84,7 +71,7 @@ class BurgerBuilder extends Component {
             ingredientAdded={this.props.onIngredientAdded}
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disabledInfo}
-            purchasable={this.state.purchasable}
+            purchasable={this.updatePurchasState(this.props.ings)}
             ordered={this.parchaseHandler}
           />
         </Auxilary>

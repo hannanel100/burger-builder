@@ -18,7 +18,7 @@ const INGREDIENT_PRICES = {
 };
 
 const reducer = (state = initialState, action) => {
-  switch (action.actionTypes) {
+  switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
       return {
         ...state,

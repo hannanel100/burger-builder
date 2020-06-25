@@ -1,5 +1,5 @@
-import * as actionTypes from "../../../../../../../../Desktop/original/auth--02-auth-store/src/store/actions/actionTypes";
-import { updateObject } from "../../../../../../../../Desktop/original/auth--02-auth-store/src/store/utility";
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   token: null,
